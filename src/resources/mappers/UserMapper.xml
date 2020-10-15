@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wk.springboot.dao.UserDao">
+    <select id="queryUserByUserName" parameterType="string" resultType="com.wk.springboot.vo.User">
+        select id,user_name,user_pwd from t_user where user_name = #{user}
+    </select>
+    <insert id="save" parameterType="com.wk.springboot.vo.User" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user(id,user_name,user_pwd) values (#{id},#{userName},#{userpwd})
+    </insert>
+    <update id="update" parameterType="com.wk.springboot.vo.User">
+        update t_user set user_name = #{userName}, user_pwd=#{userPwd} where id = #{id}
+    </update>
+<!--    <select id="selectParams" parameterType="com.wk.springboot.query.UserQuery" resultType="com.wk.springboot.vo.User">-->
+<!--        select * from current_user -->
+<!--        <where>-->
+<!--            <if test="null != userName and userName != ''">-->
+<!--                and user_name like concat('%',#{userName},'%')-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
+    <delete id="delete" parameterType="int">
+        delete from t_user where id = #{id}
+    </delete>
+</mapper>
