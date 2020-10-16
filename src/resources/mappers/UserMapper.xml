@@ -3,22 +3,25 @@
 
 <mapper namespace="com.wk.springboot.dao.UserDao">
     <select id="queryUserByUserName" parameterType="string" resultType="com.wk.springboot.vo.User">
-        select id,user_name,user_pwd from t_user where user_name = #{user}
+        select id,user_name,user_pwd from t_user where user_name = #{userName}
+    </select>
+    <select id="queryById" parameterType="Integer" resultType="com.wk.springboot.vo.User">
+        select id,user_name,user_pwd from t_user where id = #{userId}
     </select>
     <insert id="save" parameterType="com.wk.springboot.vo.User" useGeneratedKeys="true" keyProperty="id">
-        insert into t_user(id,user_name,user_pwd) values (#{id},#{userName},#{userpwd})
+        insert into t_user(id,user_name,user_pwd) values (#{id},#{userName},#{userPwd})
     </insert>
     <update id="update" parameterType="com.wk.springboot.vo.User">
         update t_user set user_name = #{userName}, user_pwd=#{userPwd} where id = #{id}
     </update>
-<!--    <select id="selectParams" parameterType="com.wk.springboot.query.UserQuery" resultType="com.wk.springboot.vo.User">-->
-<!--        select * from current_user -->
-<!--        <where>-->
-<!--            <if test="null != userName and userName != ''">-->
-<!--                and user_name like concat('%',#{userName},'%')-->
-<!--            </if>-->
-<!--        </where>-->
-<!--    </select>-->
+    <select id="selectByParams" parameterType="com.wk.springboot.query.UserQuery" resultType="com.wk.springboot.vo.User">
+        select * from t_user
+        <where>
+            <if test="null != userName and userName != ''">
+                and user_name like concat('%',#{userName},'%')
+            </if>
+        </where>
+    </select>
     <delete id="delete" parameterType="int">
         delete from t_user where id = #{id}
     </delete>

@@ -1,19 +1,20 @@
 package com.wk.springboot.dao;
 
+import com.wk.springboot.query.UserQuery;
 import com.wk.springboot.vo.User;
 
 import java.util.List;
 
 public interface UserDao {
-    public User queryUserByUserName(String userName);
+    User queryUserByUserName(String userName);
 
-    public User queryById(Integer id);
+    User queryById(Integer id);
 
-    public int save(User user);
+    int save(User user);
 
-    public int update(User user);
+    int update(User user);
 
-    public int delete(Integer userId);
+    int delete(Integer userId);
 
-//    public List<User> selectByParams(UserQuery uSerQuery);
+    List<User> selectByParams(UserQuery uSerQuery);
 }

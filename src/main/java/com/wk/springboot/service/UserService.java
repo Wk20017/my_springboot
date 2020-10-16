@@ -1,12 +1,17 @@
 package com.wk.springboot.service;
 
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.wk.springboot.dao.UserDao;
+import com.wk.springboot.query.UserQuery;
 import com.wk.springboot.utils.AssertUtil;
 import com.wk.springboot.vo.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -43,5 +48,9 @@ public class UserService {
         AssertUtil.isTrue(userDao.delete(userId)<1, "用户删除失败！");
     }
 
-
+    public PageInfo<User> queryUsersByParams(UserQuery userQuery){
+        PageHelper.startPage(userQuery.getPageNum(),userQuery.getPageSize());
+        List<User> users = userDao.selectByParams(userQuery);
+        return new PageInfo<>(users);
+    }
 }
