@@ -6,27 +6,36 @@ import com.wk.springboot.model.ResultInfo;
 import com.wk.springboot.query.UserQuery;
 import com.wk.springboot.service.UserService;
 import com.wk.springboot.vo.User;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
 @RestController
+@Api(tags = "用户模块管理")
 public class UserController {
 
     @Resource
     private UserService userService;
 
     @GetMapping("user/uname/{userName}")
+    @ApiOperation(value="用户模块-根据用户名查询用户记录")
+    @ApiImplicitParam(name = "userName",value = "查询参数",required = true,paramType = "path")
     public User queryUserByUserName(@PathVariable String userName){
+        System.out.println("用户名->"+userName);
         return userService.queryUserByUserName(userName);
     }
 
     @GetMapping("user/{userId}")
+    @ApiOperation(value="用户模块-根据用户id查询用户记录")
     public User queryUserByUserId(@PathVariable Integer userId){
         return userService.queryUserByUserId(userId);
     }
 
     @PutMapping("user")
+    @ApiOperation(value="用户模块-保存新用户")
     public ResultInfo saveUser(@RequestBody User user){//requestbody为json格式
         ResultInfo resultInfo = new ResultInfo();
         try {
@@ -44,6 +53,7 @@ public class UserController {
     }
 
     @PostMapping("user")
+    @ApiOperation(value="用户模块-更新用户信息")
     public ResultInfo updateUser(@RequestBody User user){
         ResultInfo resultInfo = new ResultInfo();
         try {
@@ -61,6 +71,7 @@ public class UserController {
     }
 
     @DeleteMapping("user/{userId}")
+    @ApiOperation(value="用户模块-删除用户")
     public ResultInfo deleteUser(@PathVariable Integer userId){
         ResultInfo resultInfo = new ResultInfo();
         try {
@@ -78,6 +89,7 @@ public class UserController {
     }
 
     @GetMapping("user/list")
+    @ApiOperation(value="用户模块-用户列表查询")
     public PageInfo<User> queryUsersByParams(UserQuery userQuery){
         return userService.queryUsersByParams(userQuery);
     }
